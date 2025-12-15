@@ -3,12 +3,11 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files และ install dependencies
-COPY package*.json ./
-RUN npm ci --legacy-peer-deps
-
 # Copy source code
 COPY . .
+
+# Install dependencies
+RUN npm ci --legacy-peer-deps
 
 # Build Quasar (สำหรับ SPA)
 RUN npm run build

@@ -9,6 +9,9 @@ RUN npm ci
 
 
 COPY . .
+# Generate Prisma Client (dummy DB URL for build time)
+RUN DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" npx prisma generate
+RUN npm run build
 
 
 # Stage 2: Production
@@ -33,4 +36,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 EXPOSE 3000
 
 
-CMD ["node", "server.js"]
+CMD ["node", "dist/server.js"]
